@@ -63,7 +63,7 @@ const fetchCoordsByIP = function(ip, callback) {
  */
 
 const fetchISSFlyOverTimes = function(coords, callback) {
-  const url = `http://api.open-notify.org/iss-pass.json?lat=${latitude}&lon=${longitude}`;  request(url, (error, resp, body) => {
+  const url = `http://api.open-notify.org/iss-pass.json?lat=${coords.latitude}&lon=${coords.longitude}`;  request(url, (error, resp, body) => {
     if (error) {
       return callback(("Error is: ", error), null);
     }
@@ -73,16 +73,9 @@ const fetchISSFlyOverTimes = function(coords, callback) {
         null);
       return;
     }
-    const risetime = JSON.parse(resp).risetime;
-    callback(null, risetime);
+    const flytime = JSON.parse(body).response;
+    callback(null, flytime);
   });
-};
-  // ...
 };
 
 module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
-
-"response": [
-  {"risetime": TIMESTAMP, "duration": DURATION},
-  ...
-]
